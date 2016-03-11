@@ -1,6 +1,6 @@
 import { Category } from './enums';
 import { Book, DamageLogger, Author, Librarian } from './interfaces';
-import { UniversityLibrarian } from './classes';
+import { UniversityLibrarian, ReferenceItem, Encyclopedia } from './classes';
 
 function GetAllBooks(): Book[] {
     
@@ -137,13 +137,38 @@ let myBook: Book = {
     markDamaged: (reason: string) => console.log('Damaged '+ reason)
 };
 
-let favouriteLibrain: Librarian = new UniversityLibrarian();
-
-favouriteLibrain.name = 'Martha';
-favouriteLibrain.assistCustomer('Lynda');
-
 //***********************
 
+//Class Expressions
+
+// let Newspaper = class extends ReferenceItem {
+//     printCitation(): void {
+//         console.log(`Newspaper: ${this.title}`);
+//     }
+// }
+
+// let myPaper = new Newspaper('The Gazzette', 2016);
+// myPaper.printCitation();
+
+// class Novel extends class { title: string } {
+//     mainCharacter: string;
+// }
+
+// let favouriteNovel = new Novel();
+
+
+//  let refBook: ReferenceItem = new Encyclopedia('WorldPedia', 2015, 1);
+//  refBook.printCitation();
+
+// let ref: ReferenceItem = new ReferenceItem('Updated Facts and Figures', 2016);
+// ref.printItem();
+// ref.publisher = 'Random Data Publishing'
+// console.log(ref.publisher);
+
+// let favouriteLibrain: Librarian = new UniversityLibrarian();
+
+// favouriteLibrain.name = 'Martha';
+// favouriteLibrain.assistCustomer('Lynda');
 
 // let logDamage: DamageLogger;
 

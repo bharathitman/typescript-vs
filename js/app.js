@@ -1,6 +1,5 @@
 "use strict";
 var enums_1 = require('./enums');
-var classes_1 = require('./classes');
 function GetAllBooks() {
     var books = [
         { id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: enums_1.Category.Fiction },
@@ -110,10 +109,28 @@ var myBook = {
     pages: 250,
     markDamaged: function (reason) { return console.log('Damaged ' + reason); }
 };
-var favouriteLibrain = new classes_1.UniversityLibrarian();
-favouriteLibrain.name = 'Martha';
-favouriteLibrain.assistCustomer('Lynda');
 //***********************
+//Class Expressions
+// let Newspaper = class extends ReferenceItem {
+//     printCitation(): void {
+//         console.log(`Newspaper: ${this.title}`);
+//     }
+// }
+// let myPaper = new Newspaper('The Gazzette', 2016);
+// myPaper.printCitation();
+// class Novel extends class { title: string } {
+//     mainCharacter: string;
+// }
+// let favouriteNovel = new Novel();
+//  let refBook: ReferenceItem = new Encyclopedia('WorldPedia', 2015, 1);
+//  refBook.printCitation();
+// let ref: ReferenceItem = new ReferenceItem('Updated Facts and Figures', 2016);
+// ref.printItem();
+// ref.publisher = 'Random Data Publishing'
+// console.log(ref.publisher);
+// let favouriteLibrain: Librarian = new UniversityLibrarian();
+// favouriteLibrain.name = 'Martha';
+// favouriteLibrain.assistCustomer('Lynda');
 // let logDamage: DamageLogger;
 // logDamage = (damage: string) => console.log('Damage reported: '+ damage);
 // logDamage('coffee stains');
