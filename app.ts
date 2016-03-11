@@ -1,4 +1,8 @@
-function GetAllBooks() {
+import { Category } from './enums';
+import { Book, DamageLogger, Author, Librarian } from './interfaces';
+import { UniversityLibrarian } from './classes';
+
+function GetAllBooks(): Book[] {
     
     let books = [
         {id: 1, title : 'Ulysses', author: 'James Joyce', available: true, category: Category.Fiction},
@@ -27,7 +31,7 @@ function LogFirstAvailable(books = GetAllBooks()): void {
     console.log('FirstAvailable: ' + firstAvailable);
 }
 
-enum Category {Biography, Poetry, Fiction, History, Children}
+
 
 function GetBookTitlesByCategory(categoryFilter: Category = Category.Fiction): Array<string> {
     
@@ -54,7 +58,7 @@ function LogBookTitles(titles: string[]): void {
 }
 
 
-function GetBookById(id: number) {
+function GetBookById(id: number): Book {
     const allBooks = GetAllBooks();
     return allBooks.filter(book => book.id == id)[0];
 }
@@ -118,10 +122,39 @@ function GetTitles(bookProperty: any): string[] {
     
     return foundTitles;
 }
+
+function PrintBook(book: Book): void {
+    console.log(book.title + ' by ' +book.author);
+}
+
+let myBook: Book = {
+    id: 5,
+    title: 'Pride and Prejudice',
+    author: 'Jane Austen',
+    available: true,
+    category: Category.Fiction,
+    pages: 250,
+    markDamaged: (reason: string) => console.log('Damaged '+ reason)
+};
+
+let favouriteLibrain: Librarian = new UniversityLibrarian();
+
+favouriteLibrain.name = 'Martha';
+favouriteLibrain.assistCustomer('Lynda');
+
 //***********************
 
-let checkoutBooks = GetTitles(false);
-checkoutBooks.forEach(title => console.log(title));
+
+// let logDamage: DamageLogger;
+
+// logDamage = (damage: string) => console.log('Damage reported: '+ damage);
+// logDamage('coffee stains');
+
+// PrintBook(myBook);
+// myBook.markDamaged('missing cover');
+
+// let checkoutBooks = GetTitles(false);
+// checkoutBooks.forEach(title => console.log(title));
 
 // let myBooks: string[] = CheckoutBooks('Throne', 1,3,4);
 // myBooks.forEach(title => console.log(title));
