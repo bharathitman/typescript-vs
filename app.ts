@@ -1,3 +1,6 @@
+/// <reference path="./typings/main.d.ts" />
+
+
 import { Category } from './enums';
 import { Book, Logger, Author, Librarian, Magazine} from './interfaces';
 import { UniversityLibrarian, ReferenceItem} from './classes';
@@ -5,6 +8,11 @@ import { CalculateLateFee as CalcFee, MaxBooksAllowed, Purge} from './lib/utilit
 import refBook from './encyclopedia';
 import Shelf from './shelf';
 
+import * as _ from "lodash";
+
+
+let snakeCaseTitle = _.snakeCase('For Whom the Bell Tolls');
+console.log(snakeCaseTitle);
 
 function GetAllBooks(): Book[] {
 

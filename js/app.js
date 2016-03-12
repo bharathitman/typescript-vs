@@ -1,6 +1,10 @@
+/// <reference path="./typings/main.d.ts" />
 "use strict";
 var enums_1 = require('./enums');
 var shelf_1 = require('./shelf');
+var _ = require("lodash");
+var snakeCaseTitle = _.snakeCase('For Whom the Bell Tolls');
+console.log(snakeCaseTitle);
 function GetAllBooks() {
     var books = [
         { id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: enums_1.Category.Fiction },
