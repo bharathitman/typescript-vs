@@ -1,5 +1,6 @@
 "use strict";
 var enums_1 = require('./enums');
+var shelf_1 = require('./shelf');
 function GetAllBooks() {
     var books = [
         { id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: enums_1.Category.Fiction },
@@ -110,6 +111,29 @@ var myBook = {
     markDamaged: function (reason) { return console.log('Damaged ' + reason); }
 };
 //***********************
+var inventory = [
+    { id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: enums_1.Category.Fiction },
+    { id: 2, title: 'A Farewell to Arms', author: 'Ernest Hemingway', available: false, category: enums_1.Category.Fiction },
+    { id: 3, title: 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true, category: enums_1.Category.Fiction },
+    { id: 4, title: 'Moby Dick', author: 'Herman Melville', available: true, category: enums_1.Category.Fiction }
+];
+var bookShelf = new shelf_1.default();
+inventory.forEach(function (book) { return bookShelf.add(book); });
+var firstBook = bookShelf.getFirst();
+var magazines = [
+    { title: 'Progamming 1', publisher: 'Code 1' },
+    { title: 'Progamming 2', publisher: 'Code 2' },
+    { title: 'Progamming 3', publisher: 'Code 3' },
+];
+var magazineShelf = new shelf_1.default();
+magazines.forEach(function (mag) { return magazineShelf.add(mag); });
+var firstMagazine = magazineShelf.getFirst();
+magazineShelf.printTitles();
+var softwareBook = bookShelf.find('Ulysses');
+// let purgedBooks: Array<Book> = Purge<Book>(inventory);
+// purgedBooks.forEach(book => console.log(book.title));
+// let purgedNums: Array<number> = Purge<number>([1,2,3,4]);
+// console.log(purgedNums);
 //Class Expressions
 // let Newspaper = class extends ReferenceItem {
 //     printCitation(): void {

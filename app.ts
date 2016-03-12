@@ -1,35 +1,36 @@
 import { Category } from './enums';
-import { Book, Logger, Author, Librarian } from './interfaces';
+import { Book, Logger, Author, Librarian, Magazine} from './interfaces';
 import { UniversityLibrarian, ReferenceItem} from './classes';
-import { CalculateLateFee as CalcFee, MaxBooksAllowed} from './lib/utilityFunctions'
+import { CalculateLateFee as CalcFee, MaxBooksAllowed, Purge} from './lib/utilityFunctions'
 import refBook from './encyclopedia';
+import Shelf from './shelf';
 
 
 function GetAllBooks(): Book[] {
-    
+
     let books = [
-        {id: 1, title : 'Ulysses', author: 'James Joyce', available: true, category: Category.Fiction},
-        {id: 2, title : 'A Farewell to Arms', author: 'Ernest Hemingway', available: false, category: Category.Fiction},
-        {id: 3, title : 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true, category: Category.Poetry},
-        {id: 4, title : 'Moby Dick', author: 'Herman Melville', available: true, category: Category.Fiction}
+        { id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: Category.Fiction },
+        { id: 2, title: 'A Farewell to Arms', author: 'Ernest Hemingway', available: false, category: Category.Fiction },
+        { id: 3, title: 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true, category: Category.Poetry },
+        { id: 4, title: 'Moby Dick', author: 'Herman Melville', available: true, category: Category.Fiction }
     ];
-    
+
     return books;
 }
 
 function LogFirstAvailable(books = GetAllBooks()): void {
-    
+
     let numberOfBooks: number = books.length;
     let firstAvailable: string = '';
-    
-    for(let currentBook of books) {
-       
-        if(currentBook.available) {
+
+    for (let currentBook of books) {
+
+        if (currentBook.available) {
             firstAvailable = currentBook.title;
             break;
         }
     }
-    
+
     console.log('Total Books: ' + numberOfBooks);
     console.log('FirstAvailable: ' + firstAvailable);
 }
@@ -37,27 +38,27 @@ function LogFirstAvailable(books = GetAllBooks()): void {
 
 
 function GetBookTitlesByCategory(categoryFilter: Category = Category.Fiction): Array<string> {
-    
-    console.log('Getting books in category: '+ Category[categoryFilter]);
-    
+
+    console.log('Getting books in category: ' + Category[categoryFilter]);
+
     const allBooks = GetAllBooks();
     const filteredTitles: string[] = [];
-    
-    for(let currentBook of allBooks) {
-        if(currentBook.category === categoryFilter) {
+
+    for (let currentBook of allBooks) {
+        if (currentBook.category === categoryFilter) {
             filteredTitles.push(currentBook.title);
         }
     }
-    
+
     return filteredTitles;
 }
 
 function LogBookTitles(titles: string[]): void {
-    
-    for(let title of titles) {
+
+    for (let title of titles) {
         console.log(title);
     }
-    
+
 }
 
 
@@ -66,29 +67,29 @@ function GetBookById(id: number): Book {
     return allBooks.filter(book => book.id == id)[0];
 }
 
-function CreateCustomerID(name: string, id: number):string {
+function CreateCustomerID(name: string, id: number): string {
     return name + id;
 }
 
 function CreateCustomer(name: String, age?: number, city?: string): void {
-    console.log('Creating Customer '+name);
-    if(age) {
-        console.log('Age:'+ age);
+    console.log('Creating Customer ' + name);
+    if (age) {
+        console.log('Age:' + age);
     }
-    if(city) {
-        console.log('City:'+city);
+    if (city) {
+        console.log('City:' + city);
     }
 }
 
 function CheckoutBooks(customer: string, ...bookIds: number[]): string[] {
-    
-    console.log('Checking out Books for ' +customer);
-    
+
+    console.log('Checking out Books for ' + customer);
+
     let booksCheckedOut: string[] = [];
-    
-    for(let id of bookIds) {
+
+    for (let id of bookIds) {
         let book = GetBookById(id);
-        if(book.available) {
+        if (book.available) {
             booksCheckedOut.push(book.title);
         }
     }
@@ -104,30 +105,30 @@ function GetTitles(bookProperty: any): string[] {
 
     const allBooks = GetAllBooks();
     const foundTitles: string[] = [];
-    
-    if(typeof bookProperty == 'string') {
+
+    if (typeof bookProperty == 'string') {
         //get all books by a particular author
-        for(let book of allBooks) {
-            if(book.author === bookProperty) {
+        for (let book of allBooks) {
+            if (book.author === bookProperty) {
                 foundTitles.push(book.title);
             }
         }
     }
-    
-    if(typeof bookProperty == 'boolean') {
+
+    if (typeof bookProperty == 'boolean') {
         //get all books based on specified availability
-        for(let book of allBooks) {
-            if(book.available === bookProperty) {
+        for (let book of allBooks) {
+            if (book.available === bookProperty) {
                 foundTitles.push(book.title);
             }
         }
     }
-    
+
     return foundTitles;
 }
 
 function PrintBook(book: Book): void {
-    console.log(book.title + ' by ' +book.author);
+    console.log(book.title + ' by ' + book.author);
 }
 
 let myBook: Book = {
@@ -137,10 +138,45 @@ let myBook: Book = {
     available: true,
     category: Category.Fiction,
     pages: 250,
-    markDamaged: (reason: string) => console.log('Damaged '+ reason)
+    markDamaged: (reason: string) => console.log('Damaged ' + reason)
 };
 
 //***********************
+
+let inventory: Array<Book> = [
+    { id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: Category.Fiction },
+    { id: 2, title: 'A Farewell to Arms', author: 'Ernest Hemingway', available: false, category: Category.Fiction },
+    { id: 3, title: 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true, category: Category.Fiction },
+    { id: 4, title: 'Moby Dick', author: 'Herman Melville', available: true, category: Category.Fiction }
+];
+
+
+let bookShelf: Shelf<Book> = new Shelf<Book>();
+
+inventory.forEach(book => bookShelf.add(book));
+
+let firstBook: Book = bookShelf.getFirst();
+
+let magazines: Array<Magazine> = [
+    {title: 'Progamming 1', publisher: 'Code 1'},
+    {title: 'Progamming 2', publisher: 'Code 2'},
+    {title: 'Progamming 3', publisher: 'Code 3'},
+];
+
+let magazineShelf: Shelf<Magazine> = new Shelf<Magazine>();
+magazines.forEach(mag => magazineShelf.add(mag));
+let firstMagazine: Magazine = magazineShelf.getFirst();
+
+magazineShelf.printTitles();
+
+let softwareBook = bookShelf.find('Ulysses');
+
+// let purgedBooks: Array<Book> = Purge<Book>(inventory);
+// purgedBooks.forEach(book => console.log(book.title));
+
+// let purgedNums: Array<number> = Purge<number>([1,2,3,4]);
+// console.log(purgedNums);
+
 
 //Class Expressions
 

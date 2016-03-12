@@ -15,4 +15,9 @@ exports.MaxBooksAllowed = MaxBooksAllowed;
 function privateFunc() {
     console.log('This is private');
 }
+function Purge(inventory) {
+    //implement fancy logic
+    return inventory.splice(2, inventory.length);
+}
+exports.Purge = Purge;
 //# sourceMappingURL=utilityFunctions.js.map
